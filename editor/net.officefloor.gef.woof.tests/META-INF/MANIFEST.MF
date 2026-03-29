@@ -4,7 +4,7 @@ Bundle-Name: Test WoOF Editor
 Bundle-SymbolicName: net.officefloor.gef.woof.tests;singleton:=true
 Bundle-Version: 3.41.0
 Bundle-Vendor: OfficeFloor
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Eclipse-RegisterBuddy: net.officefloor.core
 Eclipse-BuddyPolicy: registered 
 Require-Bundle: net.officefloor.core;bundle-version="3.41.0",

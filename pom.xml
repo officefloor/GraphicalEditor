@@ -7,14 +7,11 @@
 	<name>OfficeFloor Graphical Editor</name>
 	<description>This demonstrates the full model beneath OfficeFloor.  Though is too singular for team use.</description>
 
-	<parent>
-		<groupId>net.officefloor</groupId>
-		<artifactId>bom</artifactId>
-		<version>${revision}</version>
-		<relativePath>bom</relativePath>
-	</parent>
+	<groupId>net.officefloor</groupId>
 	<artifactId>officefloor</artifactId>
 	<packaging>pom</packaging>
+	<version>${revision}</version>
+
 	<inceptionYear>2005</inceptionYear>
 	<organization>
 		<name>OfficeFloor</name>
@@ -37,29 +34,43 @@
 	</modules>
 	<properties>
 		<ant-optional-version>1.5.3-1</ant-optional-version>
-		<asm-version>9.6</asm-version>
 		<compiler-version>3.12.1</compiler-version>
 		<current.year>2026</current.year>
 		<failsafe-version>3.2.3</failsafe-version>
+		<flatten-maven-version>1.5.0</flatten-maven-version>
+		<jacoco-version>0.8.12</jacoco-version>
+		<gpg-version>3.2.8</gpg-version>
 		<java-lowest-version>17</java-lowest-version>
+		<javadoc-version>3.6.0</javadoc-version>
 		<jetty-version>11.0.16</jetty-version>
+		<officefloor-version>4.0.0</officefloor-version>
 		<maven-version>3.9.8</maven-version>
 		<maven-changes-version>2.12.1</maven-changes-version>
 		<maven.compiler.source>${java-lowest-version}</maven.compiler.source>
 		<maven.compiler.target>${java-lowest-version}</maven.compiler.target>
 		<maven-plugin-version>3.10.2</maven-plugin-version>
-		<maven-project-info-reports-version>3.4.5</maven-project-info-reports-version>
 		<maven-shade-version>3.5.1</maven-shade-version>
+		<maven-site-version>3.12.1</maven-site-version>
+		<maven-source-version>3.3.0</maven-source-version>
 		<maven-surefire-version>3.2.5</maven-surefire-version>
 		<openjfx-version>${java-lowest-version}-ea+25</openjfx-version>
 		<openjfx-swt-version>${java-lowest-version}</openjfx-swt-version>
 		<projectVersion>${revision}</projectVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<revision>4.0.0</revision>
 		<shade-version>3.5.0</shade-version>
 		<tycho-version>4.0.4</tycho-version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
+			<!-- OfficeFloor BOM -->
+			<dependency>
+				<groupId>net.officefloor</groupId>
+				<artifactId>bom</artifactId>
+				<version>${officefloor-version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<!-- Editor -->
 			<dependency>
 				<groupId>net.officefloor.editor</groupId>
@@ -335,16 +346,6 @@
 				<artifactId>easymock</artifactId>
 				<version>5.3.0</version>
 			</dependency>
-			<dependency>
-				<groupId>org.scala-lang</groupId>
-				<artifactId>scala-library</artifactId>
-				<version>${scala-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.cloud.functions.invoker</groupId>
-				<artifactId>java-function-invoker</artifactId>
-				<version>1.3.1</version>
-			</dependency>
 			<!-- Following plug-ins are dependency managed to ensure available
 			for woof-archetype to check using the latest. -->
 			<dependency>
@@ -374,16 +375,6 @@
 			<plugins>
 				<plugin>
 					<groupId>net.officefloor.maven</groupId>
-					<artifactId>officefloor-maven-plugin</artifactId>
-					<version>${revision}</version>
-				</plugin>
-				<plugin>
-					<groupId>net.officefloor.maven</groupId>
-					<artifactId>officefloor-sam-maven-plugin</artifactId>
-					<version>${revision}</version>
-				</plugin>
-				<plugin>
-					<groupId>net.officefloor.maven</groupId>
 					<artifactId>tycho-shade-maven-plugin</artifactId>
 					<version>${revision}</version>
 				</plugin>
@@ -392,9 +383,19 @@
 					<artifactId>woof-archetype</artifactId>
 					<version>${revision}</version>
 				</plugin>
+				<plugin>
+					<groupId>net.officefloor.maven</groupId>
+					<artifactId>woof-maven-plugin</artifactId>
+					<version>${revision}</version>
+				</plugin>
 				<!-- ================================================ -->
 				<!-- Additional Plugins -->
 				<!-- ================================================ -->
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco-version}</version>
+				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>flatten-maven-plugin</artifactId>
@@ -600,34 +601,6 @@
 					<configuration>
 						<encoding>UTF-8</encoding>
 					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.datanucleus</groupId>
-					<artifactId>datanucleus-maven-plugin</artifactId>
-					<version>6.0.0-release</version>
-					<dependencies>
-						<dependency>
-							<groupId>org.datanucleus</groupId>
-							<artifactId>datanucleus-accessplatform-jpa-rdbms</artifactId>
-							<version>${datanucleus-version}</version>
-							<type>pom</type>
-						</dependency>
-					</dependencies>
-				</plugin>
-				<plugin>
-					<groupId>org.jacoco</groupId>
-					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.8.12</version>
-				</plugin>
-				<plugin>
-					<groupId>net.alchim31.maven</groupId>
-					<artifactId>scala-maven-plugin</artifactId>
-					<version>${scala-maven-version}</version>
-				</plugin>
-				<plugin>
-					<groupId>com.microsoft.azure</groupId>
-					<artifactId>azure-webapp-maven-plugin</artifactId>
-					<version>2.13.0</version>
 				</plugin>
 				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
 				<plugin>
@@ -860,96 +833,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<!-- Fix site with additional information -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>Setup Authorizor download link and Landing Page</id>
-						<inherited>false</inherited>
-						<phase>post-site</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<target>
-								<!-- Link to paper -->
-								<replace
-									file="${project.build.directory}/site/about.html">
-									<replacetoken><![CDATA[<a class="externalLink" href="http://doi.acm.org/10.1145/2739011.2739013">http://doi.acm.org/10.1145/2739011.2739013</a>]]></replacetoken>
-									<replacevalue><![CDATA[
-<!-- ACM DL Article: OfficeFloor: using office patterns to improve software design-->
-<div class="acmdlitem" id="item2739013"><img src="//dl.acm.org/images/oa.gif" width="25" height="25" border="0" alt="ACM DL Author-ize service" style="vertical-align:middle"/><a href="http://dl.acm.org/authorize?N05689" title="OfficeFloor: using office patterns to improve software design">OfficeFloor: using office patterns to improve software design</a><div style="margin-left:25px"><a href="https://dl.acm.org/author_page.cfm?id=99658741095" >Daniel Sagenschneider</a><br />EuroPLoP '13 Proceedings of the 18th European Conference on Pattern Languages of Program, 2015</div></div>
-<!-- ACM DL Bibliometrics: OfficeFloor: using office patterns to improve software design-->
-<div class="acmdlstat" id ="stats2739013"><iframe src="http://dl.acm.org/authorizestats?N05689" width="100%" height="30" scrolling="no" frameborder="0">frames are not supported</iframe></div> 
-]]></replacevalue>
-								</replace>
-								<replace
-									file="${project.build.directory}/site/about.html">
-									<replacetoken><![CDATA[<p>REDIRECT FOR DOWNLOAD</p>]]></replacetoken>
-									<replacevalue><![CDATA[
-<script type="text/javascript">
-   // Ensure appropriate URL to download paper
-   if (window.location.href !== 'https://officefloor.net/about.html') {
-       window.location.href = 'https://officefloor.net/about.html'
-   }
-</script>
-]]></replacevalue>
-								</replace>
-
-								<!-- Version on main page -->
-								<copy
-									file="${basedir}/src/site/resources/index.html"
-									toFile="${project.build.directory}/site/index.html"
-									overwrite="true" />
-								<replace
-									file="${project.build.directory}/site/index.html">
-									<replacetoken>@VERSION</replacetoken>
-									<replacevalue>${revision}</replacevalue>
-								</replace>
-
-								<!-- GitHub Ribbon on main page -->
-								<replace
-									file="${project.build.directory}/site/index.html">
-									<replacetoken>@GITHUB</replacetoken>
-									<replacevalue><![CDATA[
-<!-- GitHub corner, thanks http://tholman.com/github-corners/ -->
-<a href="http://github.com/officefloor/OfficeFloor" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
-]]></replacevalue>
-								</replace>
-							</target>
-						</configuration>
-					</execution>
-					<execution>
-						<id>Remove apidocs (need to manually upload due to size)</id>
-						<inherited>false</inherited>
-						<phase>site-deploy</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<target>
-								<!-- Remove apidocs (work around to upload to
-								GitHub). Must load apidocs manually. -->
-								<echo>Deleting apidocs. Must check out
-									officefloor.github.io project and copy in
-									apidocs!</echo>
-								<delete
-									dir="${project.build.directory}/site/apidocs" />
-							</target>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>ant</groupId>
-						<artifactId>ant-optional</artifactId>
-						<version>${ant-optional-version}</version>
-						<scope>runtime</scope>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 				<configuration>
@@ -1008,117 +891,8 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<!-- Run HTTP server for staged site content for linkcheck
-				report -->
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${jetty-version}</version>
-				<inherited>false</inherited>
-				<configuration>
-					<supportedPackagings>
-						<supportedPackaging>pom</supportedPackaging>
-					</supportedPackagings>
-					<httpConnector>
-						<port>9999</port>
-					</httpConnector>
-					<webAppSourceDirectory>${basedir}/target/site/
-					</webAppSourceDirectory>
-					<stopKey>OfficeFloor</stopKey>
-					<stopPort>9966</stopPort>
-					<stopWait>10</stopWait>
-				</configuration>
-				<executions>
-					<execution>
-						<id>Start HTTP Server of staged site for linkcheck</id>
-						<phase>pre-site</phase>
-						<goals>
-							<goal>start</goal>
-						</goals>
-						<configuration>
-							<daemon>true</daemon>
-						</configuration>
-					</execution>
-					<execution>
-						<id>Stop HTTP Server of staged site for linkcheck</id>
-						<phase>post-site</phase>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>${maven-project-info-reports-version}</version>
-				<inherited>true</inherited>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>index</report>
-						</reports>
-						<configuration>
-							<skipEmptyReport>false</skipEmptyReport>
-						</configuration>
-					</reportSet>
-				</reportSets>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-changes-plugin</artifactId>
-				<version>${maven-changes-version}</version>
-				<inherited>false</inherited>
-				<configuration>
-					<runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
-				</configuration>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>changes-report</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-			<plugin>
-				<!-- Report on broken links in site. -->
-				<!-- To obtain link check report for stage site: -->
-				<!-- 1) mvn -DskipTests clean install post-site -->
-				<!-- 2) mvn site:stage -P site-link-check -->
-				<!-- 3) cp -R target/site/apidocs/ target/staging/ -->
-				<!-- 4) rm -rf target/site -->
-				<!-- 5) mv target/staging/ target/site -->
-				<!-- 6) rm -rf target/linkcheck -->
-				<!-- 7) rm -rf target/site/linkcheck.html -->
-				<!-- 8) mvn -N post-site -->
-				<!-- 9) report available at
-				${basedir}/target/site/linkcheck.html -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-linkcheck-plugin</artifactId>
-				<version>1.2</version>
-				<inherited>false</inherited>
-				<configuration>
-					<baseURL>http://localhost:9999</baseURL>
-					<timeout>10000</timeout>
-					<forceSite>false</forceSite>
-					<excludedPages>
-						<excludedPage>apidocs/**</excludedPage>
-					</excludedPages>
-					<excludedLinks>
-						<excludedLink>//dl.acm.org/**</excludedLink>
-						<excludedLink>http://dl.acm.org/**</excludedLink>
-						<excludedLink>https://dl.acm.org/**</excludedLink>
-						<excludedLink>http://localhost:7878/hi/World</excludedLink>
-						<excludedLink>#</excludedLink>
-					</excludedLinks>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
 	<profiles>
 		<profile>
 			<id>open_java.base</id>
@@ -1151,42 +925,6 @@
 					</plugins>
 				</pluginManagement>
 			</build>
-		</profile>
-		<profile>
-			<id>check-release-to-maven-central</id>
-			<activation>
-				<property>
-					<name>officefloor-deploy</name>
-					<value>sonatype</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>license-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>check-file-header-licenses</id>
-								<goals>
-									<goal>check-file-header</goal>
-								</goals>
-								<phase>process-sources</phase>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>site-link-check</id>
-			<distributionManagement>
-				<site>
-					<id>main-site</id>
-					<name>OfficeFloor</name>
-					<url>https://officefloor.net</url>
-				</site>
-			</distributionManagement>
 		</profile>
 		<profile>
 			<id>release-site-to-github</id>
