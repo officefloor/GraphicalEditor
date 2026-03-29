@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-swt</artifactId>
-			<version>${openjfx-swt-version}</version>
+			<version>${openjfx-version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

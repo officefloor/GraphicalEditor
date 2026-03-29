@@ -30,10 +30,12 @@
 		</repository>
 	</repositories>
 	<modules>
+		<module>maven</module>
 		<module>editor</module>
 	</modules>
 	<properties>
 		<ant-optional-version>1.5.3-1</ant-optional-version>
+		<asm-version>9.6</asm-version>
 		<compiler-version>3.12.1</compiler-version>
 		<current.year>2026</current.year>
 		<failsafe-version>3.2.3</failsafe-version>
@@ -53,8 +55,7 @@
 		<maven-site-version>3.12.1</maven-site-version>
 		<maven-source-version>3.3.0</maven-source-version>
 		<maven-surefire-version>3.2.5</maven-surefire-version>
-		<openjfx-version>${java-lowest-version}-ea+25</openjfx-version>
-		<openjfx-swt-version>${java-lowest-version}</openjfx-swt-version>
+		<openjfx-version>${java-lowest-version}</openjfx-version>
 		<projectVersion>${revision}</projectVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<revision>4.0.0</revision>
@@ -1164,7 +1165,7 @@
 		<profile>
 			<id>openjfx</id>
 			<activation>
-				<jdk>[11,)</jdk>
+				<jdk>[17,)</jdk>
 			</activation>
 			<build>
 				<pluginManagement>
@@ -1188,7 +1189,7 @@
 									<extraClasspathElement>
 										<groupId>org.openjfx</groupId>
 										<artifactId>javafx-swt</artifactId>
-										<version>${openjfx-swt-version}</version>
+										<version>${openjfx-version}</version>
 									</extraClasspathElement>
 								</extraClasspathElements>
 							</configuration>
@@ -1216,8 +1217,12 @@
 										<classifier>linux</classifier>
 										<version>${openjfx-version}</version>
 									</additionalDependency>
-									<!-- javafx-swt not available in central,
-									added directly to eclipse project -->
+									<additionalDependency>
+										<groupId>org.openjfx</groupId>
+										<artifactId>javafx-swt</artifactId>
+										<classifier>linux</classifier>
+										<version>${openjfx-version}</version>
+									</additionalDependency>
 								</additionalDependencies>
 							</configuration>
 						</plugin>
