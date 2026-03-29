@@ -1,2 +1,4 @@
 /.idea/
 /.flattened-pom.xml
+/**/*.jar
+/**/.flattened-pom.xml
